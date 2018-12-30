@@ -1,0 +1,2 @@
+// Til oprettelse af token kan nedenstående streng bruges på POST
+{"username": "Anders", "password": "1234"}

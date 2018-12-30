@@ -1,2 +1,4 @@
 // Til oprettelse af token kan nedenstående streng bruges på POST
 {"username": "Anders", "password": "1234"}
+
+// Ved GET request med alderstjek skulle bogen "Steve Jobs Innovations metode" ikke fremgå af listen.

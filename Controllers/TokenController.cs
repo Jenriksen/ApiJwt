@@ -35,6 +35,14 @@ namespace ApiJwt.Controllers{
 
         private string BuildToken(UserModel user)
         {
+            // Forarbejdet til at inkludere brugerens alder er nu inkluderet så man kan udvidde med alderbegrænsning.
+            var claims = new[] {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Name),
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim(JwtRegisteredClaimNames.Birthdate, user.Birthdate.ToString("yyy-MM-dd")),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+            
             // Anvender "key" fra appsettings.json som krypteringsnøgle
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -56,6 +64,11 @@ namespace ApiJwt.Controllers{
             if (login.Username == "Anders" && login.Password == "1234")
             {
                 user = new UserModel { Name = "Anders And", Email = "Anders@andeby.dk"};
+            }
+
+            if (login.Username == "Mickey" && login.Password == "1234")
+            {
+                user = new UserModel { Name = "Mickey Mouse", Email = "Mickey@andeby.dk", Birthdate = DateTime.Now.AddYears(-100)};
             }
 
             return user;
